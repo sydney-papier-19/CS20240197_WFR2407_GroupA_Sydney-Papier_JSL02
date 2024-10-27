@@ -18,6 +18,13 @@ document.querySelector('#submitWorkout').addEventListener('click', displayWorkou
 // Function to add new fitness goals and remove completed ones
 // NOW LET'S DEBUG TO PREVENT DUPLICATE GOALS FROM BEING SUBMITTED 🚀
 
+//Converts the text to lowercase.
+//Removes any punctuation using a regular expression.
+//Trims extra whitespace.
+const normalizeText = (text) => {
+    return text.toLowerCase().replace(/[^\w\s]/g, '').trim();
+};
+
 const addNewGoal = () => {
     const goalInput = document.querySelector('#goalInput').value;
     const goalList = document.querySelector('#goalList');
@@ -35,10 +42,20 @@ const addNewGoal = () => {
     // ⚠️ Hint 4: Event listener
     // The event listener that removes goals when clicked is not related to this issue.
     // Focus on preventing duplicates for now.
+
+    const existingGoals = goalList.querySelectorAll('li');
+    for (const goal of existingGoals) {
+        if (normalizeText(goal.textContent) === goalInput) {
+            alert('This goal exists! Please enter a unique goal.');
+            return;
+        }
+    }
     
     const newGoal = document.createElement('li');
     newGoal.textContent = goalInput;
     goalList.appendChild(newGoal);
+
+    document.querySelector('#goalInput').value = '';
 };
 
 // Add event listener to the goal submit button
