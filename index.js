@@ -43,6 +43,7 @@ const addNewGoal = () => {
     // The event listener that removes goals when clicked is not related to this issue.
     // Focus on preventing duplicates for now.
 
+    // Check for duplicates
     const existingGoals = goalList.querySelectorAll('li');
     for (const goal of existingGoals) {
         if (normalizeText(goal.textContent) === goalInput) {
@@ -50,11 +51,12 @@ const addNewGoal = () => {
             return;
         }
     }
-    
+    // If no duplicate is found, add the goal to the list
     const newGoal = document.createElement('li');
     newGoal.textContent = goalInput;
     goalList.appendChild(newGoal);
 
+    // Clear the input field after adding the goal
     document.querySelector('#goalInput').value = '';
 };
 
